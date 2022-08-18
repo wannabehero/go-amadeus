@@ -1,4 +1,4 @@
-module amadeus-xml
+module amadeus
 
 go 1.18
 

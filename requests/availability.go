@@ -1,7 +1,7 @@
 package requests
 
 import (
-	"amadeus-xml/types"
+	"amadeus/types"
 
 	"github.com/google/uuid"
 )

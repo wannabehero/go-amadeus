@@ -1,7 +1,5 @@
 package types
 
-import "strconv"
-
 type InfoSource string
 type EchoToken string
 type SearchCacheLevel string
@@ -20,17 +18,17 @@ const (
 )
 
 type OTAHotelAvailRQ struct {
-	SummaryOnly          string               `xml:"SummaryOnly,attr"`
-	RateRangeOnly        string               `xml:"RateRangeOnly,attr"`
+	SummaryOnly          bool                 `xml:"SummaryOnly,attr"`
+	RateRangeOnly        bool                 `xml:"RateRangeOnly,attr"`
 	EchoToken            EchoToken            `xml:"EchoToken,attr"`
 	RequestedCurrency    string               `xml:"RequestedCurrency,attr"`
 	Version              string               `xml:"Version,attr"`
 	PrimaryLangID        string               `xml:"PrimaryLangID,attr"`
 	SearchCacheLevel     SearchCacheLevel     `xml:"SearchCacheLevel,attr"`
-	MaxResponses         string               `xml:"MaxResponses,attr"`
-	AvailRatesOnly       string               `xml:"AvailRatesOnly,attr"`
-	ExactMatchOnly       string               `xml:"ExactMatchOnly,attr"`
-	RateDetailsInd       string               `xml:"RateDetailsInd,attr"`
+	MaxResponses         int                  `xml:"MaxResponses,attr"`
+	AvailRatesOnly       bool                 `xml:"AvailRatesOnly,attr"`
+	ExactMatchOnly       bool                 `xml:"ExactMatchOnly,attr"`
+	RateDetailsInd       bool                 `xml:"RateDetailsInd,attr"`
 	AvailRequestSegments AvailRequestSegments `xml:"AvailRequestSegments"`
 }
 
@@ -44,12 +42,12 @@ type AvailRequestSegment struct {
 }
 
 type HotelSearchCriteria struct {
-	AvailableOnlyIndicator string      `xml:"AvailableOnlyIndicator,attr"`
+	AvailableOnlyIndicator bool        `xml:"AvailableOnlyIndicator,attr"`
 	Criterion              []Criterion `xml:"Criterion"`
 }
 
 type Criterion struct {
-	ExactMatch         string              `xml:"ExactMatch,attr"`
+	ExactMatch         bool                `xml:"ExactMatch,attr"`
 	StayDateRange      *StayDateRange      `xml:"StayDateRange"`
 	RatePlanCandidates *RatePlanCandidates `xml:"RatePlanCandidates"`
 	Profiles           *Profiles           `xml:"Profiles"`
@@ -83,7 +81,7 @@ type ProfileInfo struct {
 }
 
 type Profile struct {
-	ProfileType string   `xml:"ProfileType,attr"`
+	ProfileType int      `xml:"ProfileType,attr"`
 	Customer    Customer `xml:"Customer"`
 }
 
@@ -93,7 +91,7 @@ type Customer struct {
 }
 
 type Address struct {
-	UseType     string      `xml:"UseType,attr"`
+	UseType     int         `xml:"UseType,attr"`
 	CountryName CountryName `xml:"CountryName"`
 }
 
@@ -113,8 +111,8 @@ type HotelRef struct {
 }
 
 type RoomStayCandidate struct {
-	RoomID      string      `xml:"RoomID,attr"`
-	Quantity    string      `xml:"Quantity,attr"`
+	RoomID      int         `xml:"RoomID,attr"`
+	Quantity    int         `xml:"Quantity,attr"`
 	GuestCounts GuestCounts `xml:"GuestCounts"`
 }
 
@@ -126,16 +124,16 @@ func NewGuestCounts(adults int) GuestCounts {
 	return GuestCounts{
 		GuestCount: []GuestCount{
 			{
-				AgeQualifyingCode: "10",
-				Count:             strconv.Itoa(adults),
+				AgeQualifyingCode: 10,
+				Count:             adults,
 			},
 		},
 	}
 }
 
 type GuestCount struct {
-	AgeQualifyingCode string `xml:"AgeQualifyingCode,attr"`
-	Count             string `xml:"Count,attr"`
+	AgeQualifyingCode int `xml:"AgeQualifyingCode,attr"`
+	Count             int `xml:"Count,attr"`
 }
 
 var (
@@ -162,25 +160,25 @@ func NewOTAHotelAvailRQ(echoToken EchoToken, currency string, infoSource InfoSou
 		country = DefaultCustomerCountry
 	}
 	return OTAHotelAvailRQ{
-		SummaryOnly:       "true",
-		RateRangeOnly:     "true",
+		SummaryOnly:       true,
+		RateRangeOnly:     true,
 		EchoToken:         echoToken,
 		RequestedCurrency: currency,
 		Version:           "4.000",
 		PrimaryLangID:     "en",
 		SearchCacheLevel:  SearchCacheLevelLive,
-		MaxResponses:      "64",
-		AvailRatesOnly:    "true",
-		ExactMatchOnly:    "false",
-		RateDetailsInd:    "true",
+		MaxResponses:      64,
+		AvailRatesOnly:    true,
+		ExactMatchOnly:    false,
+		RateDetailsInd:    true,
 		AvailRequestSegments: AvailRequestSegments{
 			AvailRequestSegment: AvailRequestSegment{
 				InfoSource: infoSource,
 				HotelSearchCriteria: HotelSearchCriteria{
-					AvailableOnlyIndicator: "true",
+					AvailableOnlyIndicator: true,
 					Criterion: []Criterion{
 						{
-							ExactMatch: "true",
+							ExactMatch: true,
 							StayDateRange: &StayDateRange{
 								Start: start,
 								End:   end,
@@ -191,10 +189,10 @@ func NewOTAHotelAvailRQ(echoToken EchoToken, currency string, infoSource InfoSou
 							Profiles: &Profiles{
 								ProfileInfo: ProfileInfo{
 									Profile: Profile{
-										ProfileType: "1",
+										ProfileType: 1,
 										Customer: Customer{
 											Address: Address{
-												UseType: "7",
+												UseType: 7,
 												CountryName: CountryName{
 													Code: country,
 												},
@@ -208,14 +206,14 @@ func NewOTAHotelAvailRQ(echoToken EchoToken, currency string, infoSource InfoSou
 							},
 							RoomStayCandidates: &RoomStayCandidates{
 								RoomStayCandidate: RoomStayCandidate{
-									RoomID:      "1",
-									Quantity:    "1",
+									RoomID:      1,
+									Quantity:    1,
 									GuestCounts: NewGuestCounts(adults),
 								},
 							},
 						},
 						{
-							ExactMatch: "true",
+							ExactMatch: true,
 							HotelRef:   hotelRefs,
 						},
 					},

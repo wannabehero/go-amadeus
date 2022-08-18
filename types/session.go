@@ -20,7 +20,7 @@ type Session struct {
 	Awsse                 string `xml:"xmlns:awsse,attr"`
 	TransactionStatusCode string `xml:"TransactionStatusCode,attr" json:"status"`
 	SessionId             string `xml:"awsse:SessionId,omitempty" json:"id"`
-	SequenceNumber        string `xml:"awsse:SequenceNumber,omitempty" json:"number"`
+	SequenceNumber        int    `xml:"awsse:SequenceNumber,omitempty" json:"number"`
 	SecurityToken         string `xml:"awsse:SecurityToken,omitempty" json:"token"`
 }
 
@@ -28,6 +28,7 @@ func NewSession() *Session {
 	return &Session{
 		Awsse:                 "http://xml.amadeus.com/2010/06/Session_v3",
 		TransactionStatusCode: SessionStatusStart,
+		SequenceNumber:        1,
 	}
 }
 

@@ -28,7 +28,7 @@ type UserID struct {
 	AgentDutyCode  string `xml:"AgentDutyCode,attr"`
 	RequestorType  string `xml:"RequestorType,attr"`
 	PseudoCityCode string `xml:"PseudoCityCode,attr"`
-	POSType        string `xml:"POS_Type,attr"`
+	POSType        int    `xml:"POS_Type,attr"`
 }
 
 func NewUserID(config AmadeusConfig) UserID {

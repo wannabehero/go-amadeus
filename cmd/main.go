@@ -1,8 +1,8 @@
 package main
 
 import (
-	"amadeus-xml/requests"
-	"amadeus-xml/types"
+	"amadeus/requests"
+	"amadeus/types"
 	"bytes"
 	"encoding/xml"
 	"io/ioutil"

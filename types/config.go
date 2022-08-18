@@ -13,7 +13,7 @@ type AmadeusConfig struct {
 	PseudoCityCode string `yaml:"pseudoCityCode"`
 	AgentDutyCode  string `yaml:"agentDutyCode"`
 	RequestorType  string `yaml:"requestorType"`
-	POSType        string `yaml:"posType"`
+	POSType        int    `yaml:"posType"`
 	URL            string `yaml:"url"`
 	WSAP           string `yaml:"wsap"`
 }

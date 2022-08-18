@@ -1,6 +1,6 @@
 package types
 
-import "amadeus-xml/utils"
+import "amadeus/utils"
 
 type Security struct {
 	Oas           string        `xml:"xmlns:oas,attr"`
