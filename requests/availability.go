@@ -12,8 +12,6 @@ const (
 )
 
 func NewAvailabilityRequest(infoSource types.InfoSource, start string, end string, currency string, country string, adults int, hotels []string, session *types.Session, config types.AmadeusConfig) (envelope types.Envelope, action string) {
-	messageID := uuid.NewString()
-
 	hotelRefs := make([]types.HotelRef, len(hotels))
 	for i, hotel := range hotels {
 		hotelRefs[i] = types.HotelRef{
@@ -24,20 +22,22 @@ func NewAvailabilityRequest(infoSource types.InfoSource, start string, end strin
 		}
 	}
 
+	availabilityRQ := types.NewOTAHotelAvailRQ(
+		"MultiSingle",
+		currency,
+		infoSource,
+		start,
+		end,
+		country,
+		adults,
+		hotelRefs,
+	)
+
 	action = ActionAvailablity
 	envelope = types.NewEnvelope(
-		types.NewHeader(messageID, ActionAvailablity, session, config),
+		types.NewHeader(uuid.NewString(), ActionAvailablity, session, config),
 		types.Body{
-			OTAHotelAvailRQ: types.NewOTAHotelAvailRQ(
-				"MultiSingle",
-				currency,
-				infoSource,
-				start,
-				end,
-				country,
-				adults,
-				hotelRefs,
-			),
+			OTAHotelAvailRQ: &availabilityRQ,
 		},
 	)
 

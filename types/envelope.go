@@ -20,23 +20,24 @@ import (
 // )
 
 type Envelope struct {
-	XMLName xml.Name    `xml:"soapenv:Envelope"`
-	Soapenv string      `xml:"xmlns:soapenv,attr"`
-	Link    string      `xml:"xmlns:link,attr"`
-	Sec     string      `xml:"xmlns:sec,attr"`
-	Typ     string      `xml:"xmlns:typ,attr"`
-	Iat     string      `xml:"xmlns:iat,attr"`
-	App     string      `xml:"xmlns:app,attr"`
-	Ses     string      `xml:"xmlns:ses,attr"`
-	Header  Header      `xml:"soapenv:Header"`
-	Body    interface{} `xml:"soapenv:Body"`
+	XMLName xml.Name `xml:"soapenv:Envelope"`
+	Soapenv string   `xml:"xmlns:soapenv,attr"`
+	Link    string   `xml:"xmlns:link,attr"`
+	Sec     string   `xml:"xmlns:sec,attr"`
+	Typ     string   `xml:"xmlns:typ,attr"`
+	Iat     string   `xml:"xmlns:iat,attr"`
+	App     string   `xml:"xmlns:app,attr"`
+	Ses     string   `xml:"xmlns:ses,attr"`
+	Header  Header   `xml:"soapenv:Header"`
+	Body    Body     `xml:"soapenv:Body"`
 }
 
 type Body struct {
-	OTAHotelAvailRQ OTAHotelAvailRQ `xml:"OTA_HotelAvailRQ"`
+	OTAHotelAvailRQ           *OTAHotelAvailRQ
+	OTAHotelDescriptiveInfoRQ *OTAHotelDescriptiveInfoRQ
 }
 
-func NewEnvelope(header Header, body interface{}) Envelope {
+func NewEnvelope(header Header, body Body) Envelope {
 	return Envelope{
 		Soapenv: "http://schemas.xmlsoap.org/soap/envelope/",
 		Link:    "http://wsdl.amadeus.com/2010/06/ws/Link_v1",

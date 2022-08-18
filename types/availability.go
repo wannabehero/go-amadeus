@@ -1,5 +1,7 @@
 package types
 
+import "encoding/xml"
+
 type InfoSource string
 type EchoToken string
 type SearchCacheLevel string
@@ -11,6 +13,7 @@ const (
 
 const (
 	EchoTokenMultiSingle EchoToken = "MultiSingle"
+	EchoTokenWithParsing EchoToken = "WithParsing"
 )
 
 const (
@@ -18,6 +21,8 @@ const (
 )
 
 type OTAHotelAvailRQ struct {
+	XMLName xml.Name `xml:"OTA_HotelAvailRQ"`
+
 	SummaryOnly          bool                 `xml:"SummaryOnly,attr"`
 	RateRangeOnly        bool                 `xml:"RateRangeOnly,attr"`
 	EchoToken            EchoToken            `xml:"EchoToken,attr"`
