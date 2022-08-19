@@ -73,13 +73,14 @@ type OTAHotelDescriptiveInfoRQ struct {
 
 func NewHotelDescriptiveInfo(hotelCode string) HotelDescriptiveInfo {
 	return HotelDescriptiveInfo{
-		HotelCode:       hotelCode,
-		HotelInfo:       HotelInfo{SendData: true, HotelStatus: true},
-		FacilityInfo:    FacilityInfo{SendMeetingRooms: true, SendGuestRooms: true, SendRestaurants: true},
-		Policies:        Policies{SendPolicies: true},
-		AreaInfo:        AreaInfo{SendRefPoints: true, SendAttractions: true, SendRecreations: true},
-		AffiliationInfo: AffiliationInfo{SendLoyalPrograms: true, SendAwards: true},
-		ContactInfo:     ContactInfo{SendData: true},
+		HotelCode:         hotelCode,
+		HotelInfo:         HotelInfo{SendData: true, HotelStatus: true},
+		FacilityInfo:      FacilityInfo{SendMeetingRooms: true, SendGuestRooms: true, SendRestaurants: true},
+		Policies:          Policies{SendPolicies: true},
+		AreaInfo:          AreaInfo{SendRefPoints: true, SendAttractions: true, SendRecreations: true},
+		AffiliationInfo:   AffiliationInfo{SendLoyalPrograms: true, SendAwards: true},
+		ContactInfo:       ContactInfo{SendData: true},
+		MultimediaObjects: MultimediaObjects{SendData: true},
 		ContentInfos: ContentInfos{
 			ContentInfo: []ContentInfo{
 				{
