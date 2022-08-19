@@ -30,7 +30,15 @@ func getMethodName(action string) string {
 	return components[len(components)-1]
 }
 
-func SendRequest(action string, envelope types.Envelope, config types.AmadeusConfig) ([]byte, error) {
+type AmadeusAPIClient struct {
+	config types.AmadeusConfig
+}
+
+func NewClient(config types.AmadeusConfig) *AmadeusAPIClient {
+	return &AmadeusAPIClient{config}
+}
+
+func (client *AmadeusAPIClient) SendRequest(action string, envelope types.Envelope) ([]byte, error) {
 	data, err := xml.MarshalIndent(envelope, "  ", "  ")
 	if err != nil {
 		return nil, err
@@ -38,7 +46,7 @@ func SendRequest(action string, envelope types.Envelope, config types.AmadeusCon
 
 	go saveLogsFile(fmt.Sprintf("%s_RQ.xml", getMethodName(action)), data)
 
-	req, _ := http.NewRequest(http.MethodPost, config.URL, bytes.NewReader(data))
+	req, _ := http.NewRequest(http.MethodPost, client.config.URL, bytes.NewReader(data))
 	req.Header.Set("content-type", "text/xml;charset=UTF-8")
 	req.Header.Set("soapaction", action)
 

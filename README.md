@@ -37,7 +37,7 @@ Running the server spins us a local sever on `0.0.0.0:3000`.
 Use `PORT` env-var to set a different port
 
 ### Availability
-- `POST /api/availability`
+`POST /api/availability`
 
 ```json
 {
@@ -47,11 +47,15 @@ Use `PORT` env-var to set a different port
   "currency": "USD",
   "hotels": [
     "HYSEAHSR"
-  ]
+  ],
+  "infoSource": "Distribution"
 }
 ```
 
-- `POST /api/description`
+`infoSource` - provide `Distribution` for GDS content, and `Leisure` for partner content (XD, BK, HB, etc.)
+
+### Descriptive Info
+`POST /api/description`
 
 ```json
 {

@@ -17,11 +17,12 @@ import (
 )
 
 type AvailabilityAPIRequest struct {
-	Hotels   []string `json:"hotels"`
-	CheckIn  string   `json:"checkIn"`
-	CheckOut string   `json:"checkOut"`
-	Currency string   `json:"currency"`
-	Adults   int      `json:"adults"`
+	Hotels     []string         `json:"hotels"`
+	CheckIn    string           `json:"checkIn"`
+	CheckOut   string           `json:"checkOut"`
+	Currency   string           `json:"currency"`
+	Adults     int              `json:"adults"`
+	InfoSource types.InfoSource `json:"infoSource"`
 }
 
 func checkAvailabilityHandler(config types.AmadeusConfig) fiber.Handler {
@@ -32,7 +33,7 @@ func checkAvailabilityHandler(config types.AmadeusConfig) fiber.Handler {
 		}
 
 		envelope, action := requests.NewAvailabilityRequest(
-			types.InfoSourceLeisure,
+			request.InfoSource,
 			request.CheckIn,
 			request.CheckOut,
 			request.Currency,
@@ -43,7 +44,7 @@ func checkAvailabilityHandler(config types.AmadeusConfig) fiber.Handler {
 			config,
 		)
 
-		data, err := api.SendRequest(action, envelope, config)
+		data, err := amadeusClient.SendRequest(action, envelope)
 		if err != nil {
 			return c.JSON(fiber.Map{
 				"error": err.Error(),
@@ -67,7 +68,7 @@ func getDescriptionHandler(config types.AmadeusConfig) fiber.Handler {
 		}
 
 		envelope, action := requests.NewDescriptiveInfoRequest(request.Hotels, nil, config)
-		data, err := api.SendRequest(action, envelope, config)
+		data, err := amadeusClient.SendRequest(action, envelope)
 		if err != nil {
 			return c.JSON(fiber.Map{
 				"error": err.Error(),
@@ -79,6 +80,8 @@ func getDescriptionHandler(config types.AmadeusConfig) fiber.Handler {
 	}
 }
 
+var amadeusClient *api.AmadeusAPIClient
+
 func main() {
 	config := types.LoadConfigFromFile(os.Getenv("CONFIG_FILE"))
 	app := fiber.New(fiber.Config{
@@ -86,6 +89,8 @@ func main() {
 		JSONDecoder: json.Unmarshal,
 	})
 	app.Use(logger.New())
+
+	amadeusClient = api.NewClient(config)
 
 	gracefully(func() {
 		app.Shutdown()
