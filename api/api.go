@@ -1,7 +1,6 @@
 package api
 
 import (
-	"amadeus/types"
 	"bytes"
 	"encoding/xml"
 	"fmt"
@@ -10,6 +9,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/wannabehero/go-amadeus/types"
 )
 
 var (

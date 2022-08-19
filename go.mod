@@ -1,4 +1,4 @@
-module amadeus
+module github.com/wannabehero/go-amadeus
 
 go 1.18
 

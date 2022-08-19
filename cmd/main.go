@@ -1,15 +1,16 @@
 package main
 
 import (
-	"amadeus/api"
-	"amadeus/requests"
-	"amadeus/types"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/wannabehero/go-amadeus/api"
+	"github.com/wannabehero/go-amadeus/requests"
+	"github.com/wannabehero/go-amadeus/types"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

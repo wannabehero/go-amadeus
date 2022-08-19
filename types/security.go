@@ -1,6 +1,6 @@
 package types
 
-import "amadeus/utils"
+import "github.com/wannabehero/go-amadeus/utils"
 
 type Security struct {
 	Oas           string        `xml:"xmlns:oas,attr"`

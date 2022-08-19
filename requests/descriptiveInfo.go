@@ -1,7 +1,7 @@
 package requests
 
 import (
-	"amadeus/types"
+	"github.com/wannabehero/go-amadeus/types"
 
 	"github.com/google/uuid"
 )

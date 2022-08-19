@@ -4,21 +4,6 @@ import (
 	"encoding/xml"
 )
 
-// type LiteralBooleanValue string
-
-// type LiteralBoolean struct {
-// 	value LiteralBooleanValue
-// }
-
-// func (lb LiteralBoolean) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
-// 	return xml.Attr{Name: name, Value: string(lb.value)}, nil
-// }
-
-// var (
-// 	LiteralFalse = LiteralBoolean{value: "false"}
-// 	LiteralTrue  = LiteralBoolean{value: "true"}
-// )
-
 type Envelope struct {
 	XMLName xml.Name `xml:"soapenv:Envelope"`
 	Soapenv string   `xml:"xmlns:soapenv,attr"`
